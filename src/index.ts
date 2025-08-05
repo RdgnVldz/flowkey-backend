@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth";
+import { Request, Response } from "express";
 
 dotenv.config();
 
@@ -13,7 +14,7 @@ app.use(express.json());
 
 app.use("/api", authRoutes);
 
-app.get("/", (_, res) => {
+app.get("/", (_: Request, res: Response) => {
   res.send("Flowkey backend is running.");
 });
 

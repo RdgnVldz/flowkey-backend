@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import bs58 from "bs58";
 import jwt from "jsonwebtoken";
 import { PublicKey } from "@solana/web3.js";
@@ -7,7 +7,7 @@ import verifySignature from "../utils/verifySignature";
 
 const router = express.Router();
 
-router.get("/token", async (req, res) => {
+router.get("/token", async (req: Request, res: Response) => {
   const publicAddress = req.query.publicAddress as string;
   if (!publicAddress) return res.status(400).json({ message: "Missing address" });
 
@@ -17,7 +17,7 @@ router.get("/token", async (req, res) => {
   res.json({ code: nonce });
 });
 
-router.get("/verify", async (req, res) => {
+router.get("/verify", async (req: Request, res: Response) => {
   const publicAddress = req.query.publicAddress as string;
   const signatureBase58 = req.query.signature as string;
 

@@ -1,5 +1,6 @@
 import { PublicKey } from "@solana/web3.js";
 import bs58 from "bs58";
+import nacl from "tweetnacl";
 
 export default async function verifySignature(
   address: string,
@@ -7,11 +8,11 @@ export default async function verifySignature(
   message: string
 ): Promise<boolean> {
   try {
-    const pubkey = new PublicKey(address);
+    const pubkey = new PublicKey(address).toBytes();
     const signature = bs58.decode(signatureBase58);
     const messageUint8 = new TextEncoder().encode(message);
 
-    return pubkey.verify(messageUint8, signature);
+    return nacl.sign.detached.verify(messageUint8, signature, pubkey);
   } catch {
     return false;
   }
