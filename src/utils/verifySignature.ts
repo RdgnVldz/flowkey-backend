@@ -8,11 +8,11 @@ export default async function verifySignature(
   message: string
 ): Promise<boolean> {
   try {
-    const pubkey = new PublicKey(address).toBytes();
+    const pubkeyBytes = new PublicKey(address).toBytes();
     const signature = bs58.decode(signatureBase58);
     const messageUint8 = new TextEncoder().encode(message);
 
-    return nacl.sign.detached.verify(messageUint8, signature, pubkey);
+    return nacl.sign.detached.verify(messageUint8, signature, pubkeyBytes);
   } catch {
     return false;
   }
